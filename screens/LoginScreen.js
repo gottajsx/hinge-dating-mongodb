@@ -4,91 +4,60 @@ import {
   View,
   SafeAreaView,
   Image,
+  KeyboardAvoidingView,
   TextInput,
   Pressable,
-  KeyboardAvoidingView,
 } from 'react-native';
-import React, {useState,useEffect,useContext} from 'react';
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import React, {useState,useContext} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {BASE_URL} from '../urls/url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../AuthContext';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const route = useRoute();
-  console.log(route)
-  const [password, setPassword] = useState('');
+  const [option, setOption] = useState('Sign In');
   const navigation = useNavigation();
-  const [option, setOption] = useState('Create account');
-  const { token, isLoading,setToken } = useContext(AuthContext);
+  const [word, setWord] = useState('');
+  const [password, setPassword] = useState('');
+  const {token,setToken} = useContext(AuthContext);
 
-  console.log(token)
-
-  useEffect(() => {
-    // Check if the token is set and not in loading state
-    if (token) {
-      // Navigate to the main screen
-      navigation.navigate('MainStack', { screen: 'Main' });
-    }
-  }, [token, navigation]);
-  const signInUser = async() => {
-    setOption('Sign In');
-
-
-      try {
-        console.log(email);
-        console.log(password);
-        const user = {
-          email: email,
-          password: password,
-        };
-        const response = await axios.post('http://localhost:3000/login', user);
-        console.log('Dfdfd');
-        const token = response.data.token;
-        
-        // Store the token in AsyncStorage
-        await AsyncStorage.setItem('token', token);
-
-        setToken(token)
-        // navigation.replace('Main');
-      } catch (error) {
-        console.log('error',error);
-      }
-  
-  };
   const createAccount = () => {
     setOption('Create account');
 
     navigation.navigate('Basic');
   };
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    setOption('Sign In');
+
+    if (!word || !password) {
+      return;
+    }
+
+    console.log("Hi");
+
     const user = {
-      email: email,
+      email: word,
       password: password,
     };
-    axios.post('http://localhost:3000/login', user).then(response => {
-      console.log(response);
-      const token = response.data.token;
-      AsyncStorage.setItem('auth', token);
-      router.replace('/(authenticate)/select');
-    });
+
+    const response = await axios.post(`${BASE_URL}/login`, user);
+
+    const {token, IdToken, AccessToken} = response.data;
+
+
+    console.log("token",token);
+
+    await AsyncStorage.setItem('token', token);
+    setToken(token)
+    await AsyncStorage.setItem('idToken', IdToken);
+    await AsyncStorage.setItem('accessToken', AccessToken);
   };
+
   return (
-    <SafeAreaView
-      style={{flex: 1, backgroundColor: 'white', alignItems: 'center'}}>
-      <View
-        style={{
-          height: 200,
-          backgroundColor: '#581845',
-          width: '100%',
-          borderBottomLeftRadius: 100,
-          borderBottomRightRadius: 100,
-        }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <View style={{height: 200, backgroundColor: '#581845', width: '100%'}}>
         <View
           style={{
             justifyContent: 'center',
@@ -98,7 +67,7 @@ const LoginScreen = () => {
           <Image
             style={{width: 150, height: 80, resizeMode: 'contain'}}
             source={{
-              uri: 'https://cdn-icons-png.flaticon.com/128/4310/4310217.png',
+              uri: 'https://cdn-icons-png.flaticon.com/128/4207/4207268.png',
             }}
           />
         </View>
@@ -106,8 +75,8 @@ const LoginScreen = () => {
           style={{
             marginTop: 20,
             textAlign: 'center',
-            fontSize: 23,
-            fontFamily: 'GeezaPro-Bold',
+            fontSize: 24,
+            fontFamily: 'GeezaPro-bold',
             color: 'white',
           }}>
           Hinge
@@ -123,102 +92,91 @@ const LoginScreen = () => {
               marginTop: 25,
               color: '#581845',
             }}>
-            Desgined to be deleted
+            Designed to be deleted
           </Text>
         </View>
 
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          <Image
-            style={{width: 100, height: 80, resizeMode: 'cover'}}
-            source={{
-              uri: 'https://branditechture.agency/brand-logos/wp-content/uploads/wpdm-cache/Hinge-App-900x0.png',
-            }}
-          />
-        </View>
+        {option == 'Sign In' && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            <Image
+              style={{width: 150, height: 80, resizeMode: 'contain'}}
+              source={{
+                uri: 'https://cdn-icons-png.flaticon.com/128/6809/6809493.png',
+              }}
+            />
+          </View>
+        )}
 
-        <View style={{marginTop: 20}}>
+        <View style={{marginHorizontal: 20, marginTop: 20}}>
           {option == 'Sign In' ? (
             <>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: 5,
-                  backgroundColor: '#581845',
-                  paddingVertical: 5,
-                  borderRadius: 5,
-                  marginTop: 30,
-                }}>
-                <MaterialIcons
-                  style={{marginLeft: 8}}
-                  name="email"
-                  size={24}
-                  color="white"
-                />
-                <TextInput
-                  value={email}
-                  onChangeText={text => setEmail(text)}
-                  placeholder="Enter your email"
-                  placeholderTextColor={'white'}
-                  style={{
-                    color: 'white',
-                    marginVertical: 10,
-                    width: 300,
-                    // fontSize: password ? 17 : 17,
-                  }}
-                />
-              </View>
+              <View>
+                <View style={{marginTop: 14}}>
+                  <View
+                    style={{
+                      padding: 14,
+                      backgroundColor: 'white',
+                      borderRadius: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 15,
+                      borderColor: '#E0E0E0',
+                      borderWidth: 0.6,
+                    }}>
+                    <Text style={{fontSize: 14, color: '#800080', width: 70}}>
+                      Email
+                    </Text>
 
-              <View style={{}}>
+                    <TextInput
+                      value={word}
+                      onChangeText={text => setWord(text)}
+                      placeholder="User@example.com"
+                      placeholderTextColor={'gray'}
+                    />
+                  </View>
+                </View>
+
+                <View style={{marginTop: 20}}>
+                  <View
+                    style={{
+                      padding: 14,
+                      backgroundColor: 'white',
+                      borderRadius: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 15,
+                      borderColor: '#E0E0E0',
+                      borderWidth: 0.6,
+                    }}>
+                    <Text style={{fontSize: 14, color: '#800080', width: 70}}>
+                      Password
+                    </Text>
+
+                    <TextInput
+                      secureTextEntry={true}
+                      value={password}
+                      onChangeText={text => setPassword(text)}
+                      placeholder="Required"
+                      placeholderTextColor={'gray'}
+                    />
+                  </View>
+                </View>
+
                 <View
                   style={{
+                    marginTop: 12,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    gap: 5,
-                    backgroundColor: '#581845',
-                    paddingVertical: 5,
-                    borderRadius: 5,
-                    marginTop: 30,
+                    justifyContent: 'space-between',
                   }}>
-                  <AntDesign
-                    style={{marginLeft: 8}}
-                    name="lock1"
-                    size={24}
-                    color="white"
-                  />
-                  <TextInput
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    secureTextEntry={true}
-                    placeholder="Enter your password"
-                    style={{
-                      color: 'white',
-                      marginVertical: 10,
-                      width: 300,
-                      //   fontSize: password ? 17 : 17,
-                    }}
-                    placeholderTextColor="white"
-                  />
+                  <Text>Keep me logged in</Text>
+                  <Text>Forgot Password</Text>
                 </View>
-              </View>
-
-              <View
-                style={{
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                <Text>Keep me logged in</Text>
-
-                <Text style={{color: '#007FFF', fontWeight: '500'}}>
-                  Forgot Password
-                </Text>
               </View>
             </>
           ) : (
@@ -260,12 +218,11 @@ const LoginScreen = () => {
                 fontSize: 16,
                 fontWeight: 'bold',
               }}>
-              Create account
+              Create Account
             </Text>
           </Pressable>
-
           <Pressable
-            onPress={signInUser}
+            onPress={handleLogin}
             style={{
               width: 300,
               backgroundColor: option == 'Sign In' ? '#581845' : 'transparent',
@@ -274,7 +231,6 @@ const LoginScreen = () => {
               marginRight: 'auto',
               padding: 15,
               borderRadius: 30,
-              marginTop: 20,
             }}>
             <Text
               style={{
