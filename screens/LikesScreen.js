@@ -20,7 +20,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
 
-export default function HomeScreen() {
+export default function LikesScreen() {
   return (
     <View>
       <Text>Hello Monde !</Text>
