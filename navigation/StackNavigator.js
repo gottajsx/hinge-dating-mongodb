@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ActivityIndicator,  View} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
@@ -8,33 +9,33 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import LikesScreen from '../screens/LikesScreen';
-// import ChatScreen from '../screens/ChatScreen';
-// import ProfileScreen from '../screens/ProfileScreen';
-// import BasicInfo from '../screens/BasicInfo';
-// import NameScreen from '../screens/NameScreen';
-// import EmailScreen from '../screens/EmailScreen';
-// import BirthScreen from '../screens/BirthScreen';
-// import LocationScreen from '../screens/LocationScreen';
-// import GenderScreen from '../screens/GenderScreen';
-// import TypeScreen from '../screens/TypeScreen';
-// import DatingType from '../screens/DatingType';
-// import AnimationScreen from '../screens/AnimationScreen';
-// import LookingFor from '../screens/LookingFor';
-// import HomeTownScreen from '../screens/HomeTownScreen';
-// import PhotoScreen from '../screens/PhotoScreen';
-// import PromptsScreen from '../screens/PromptsScreen';
-// import ShowPromptsScreen from '../screens/ShowPromptsScreen';
+import LikesScreen from '../screens/LikesScreen';
+import ChatScreen from '../screens/ChatScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import BasicInfo from '../screens/BasicInfo';
+import NameScreen from '../screens/NameScreen';
+import EmailScreen from '../screens/EmailScreen';
+import BirthScreen from '../screens/BirthScreen';
+import LocationScreen from '../screens/LocationScreen';
+import GenderScreen from '../screens/GenderScreen';
+import TypeScreen from '../screens/TypeScreen';
+import DatingType from '../screens/DatingType';
+import AnimationScreen from '../screens/AnimationScreen';
+import LookingFor from '../screens/LookingFor';
+import HomeTownScreen from '../screens/HomeTownScreen';
+import PhotoScreen from '../screens/PhotoScreen';
+import PromptsScreen from '../screens/PromptsScreen';
+import ShowPromptsScreen from '../screens/ShowPromptsScreen';
 import LoginScreen from '../screens/LoginScreen';
-// import ChatRoom from '../screens/ChatRoom';
-// import SignupScreen from '../screens/SignupScreen';
+import ChatRoom from '../screens/ChatRoom';
+import SignupScreen from '../screens/SignupScreen';
 import {AuthContext} from '../AuthContext';
-// import PreFinalScreen from '../screens/PreFinalScreen';
-// import TestScreen from '../screens/TestScreen';
-// import ProfileDetailsScreen from '../screens/ProfileDetailsScreen';
-// import Password from '../screens/Password';
-// import SendLikeScreen from '../screens/SendLikeScreen';
-// import HandleLikeScreen from '../screens/HandleLikeScreen';
+import PreFinalScreen from '../screens/PreFinalScreen';
+import TestScreen from '../screens/TestScreen';
+import ProfileDetailsScreen from '../screens/ProfileDetailsScreen';
+import Password from '../screens/Password';
+import SendLikeScreen from '../screens/SendLikeScreen';
+import HandleLikeScreen from '../screens/HandleLikeScreen';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -153,7 +154,7 @@ const StackNavigator = () => {
         component={LoginScreen}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Basic"
         component={BasicInfo}
         options={{headerShown: false}}
@@ -227,7 +228,7 @@ const StackNavigator = () => {
         name="PreFinal"
         component={PreFinalScreen}
         options={{headerShown: false}}
-      /> */}
+      />
       {/* <Stack.Screen
         name="Main"
         component={BottomTabs}
@@ -288,3 +289,4 @@ const StackNavigator = () => {
     </NavigationContainer>
   );
 };
+export default StackNavigator;

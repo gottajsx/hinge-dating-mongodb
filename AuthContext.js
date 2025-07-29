@@ -1,9 +1,9 @@
 import {createContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-const AuthProvider = ({children}) => {
+export const AuthProvider = ({children}) => {
   const [token, setToken] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,6 +30,7 @@ const AuthProvider = ({children}) => {
   useEffect(() => {
       isLoggedIn()
   },[token]);
+
   useEffect(() => {
     // Check if token is set and trigger navigation accordingly
     if (token) {
@@ -44,4 +45,3 @@ const AuthProvider = ({children}) => {
   );
 };
 
-export {AuthContext, AuthProvider};
