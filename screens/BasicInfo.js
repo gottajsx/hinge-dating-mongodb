@@ -2,28 +2,79 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
+  SafeAreaView,
+  Platform,
   Pressable,
-  Image,
 } from 'react-native';
-import React, {useEffect, useState, useCallback} from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import 'core-js/stable/atob';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Octicons from 'react-native-vector-icons/Octicons';
-import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import {jwtDecode} from 'jwt-decode';
-import axios from 'axios';
+import React from 'react';
+import LottieView from 'lottie-react-native';
+import {useNavigation} from '@react-navigation/native';
 
-export default function BasicInfo() {
+const BasicInfo = () => {
+  const navigation = useNavigation();
   return (
-    <View>
-      <Text>Hello Monde !</Text>
-    </View>
+    <SafeAreaView
+      style={{
+        paddingTop: Platform.OS === 'android' ? 35 : 0,
+        flex: 1,
+        backgroundColor: 'white',
+      }}>
+      <View style={{marginTop: 80}}>
+        <Text
+          style={{
+            fontSize: 32,
+            fontWeight: 'bold',
+            fontFamily: 'GeezaPro-Bold',
+            marginLeft: 20,
+          }}>
+          You're one of a kind.
+        </Text>
+
+        <Text
+          style={{
+            fontSize: 32,
+            fontWeight: 'bold',
+            fontFamily: 'GeezaPro-Bold',
+            marginLeft: 20,
+            marginTop: 10,
+          }}>
+          You're profile should be too.
+        </Text>
+      </View>
+
+      <View>
+        <LottieView
+          style={{
+            height: 260,
+            width: 300,
+            alignSelf: 'center',
+            marginTop: 40,
+            justifyContent: 'center',
+          }}
+          source={require('../assets/love.json')}
+          autoPlay
+          loop={true}
+          speed={0.7}
+        />
+      </View>
+
+      <Pressable
+        onPress={() => navigation.navigate('Name')}
+        style={{marginTop: 'auto', backgroundColor: '#900C3F', padding: 15}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            color: 'white',
+            fontWeight: '600',
+            fontSize: 15,
+          }}>
+          Enter Basic Info
+        </Text>
+      </Pressable>
+    </SafeAreaView>
   );
-}
+};
+
+export default BasicInfo;
+
+const styles = StyleSheet.create({});
