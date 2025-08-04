@@ -28,18 +28,21 @@ const PasswordScreen = () => {
     if(!email){
       return;
     }
-
-    try{
+ 
+    // SSC to bypass otp sequence
+    /* try{
       const response = await axios.post(`${BASE_URL}/sendOtp`,{
         email,
         password
       });
       console.log(response.data.message);
       navigation.navigate('Otp', {email});
-
     } catch(error){
       console.log("Error sending the OTP",error)
-    }
+    } */
+
+    console.log("SSC - Temporary bypass otp sending")
+    navigation.navigate("Birth"); // SSC to bypass Otp sequence
   }
   const handleNext = () => {
     if(password.trim() !== ''){
@@ -47,7 +50,9 @@ const PasswordScreen = () => {
     }
     // navigation.navigate('Otp', {email});
 
-    handleSendOtp();
+    // SSC to bypass otp sequence
+    // handleSendOtp();
+    navigation.navigate("Birth"); 
   };
   return (
     <SafeAreaView
