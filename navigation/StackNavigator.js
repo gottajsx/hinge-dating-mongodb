@@ -36,6 +36,8 @@ import ProfileDetailsScreen from '../screens/ProfileDetailsScreen';
 import Password from '../screens/Password';
 import SendLikeScreen from '../screens/SendLikeScreen';
 import HandleLikeScreen from '../screens/HandleLikeScreen';
+import WorkPlace from '../screens/WorkPlace'; 
+import JobTitleScreen from '../screens/JobTitleScreen';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -169,6 +171,11 @@ const StackNavigator = () => {
         component={EmailScreen}
         options={{headerShown: false}}
       />
+      {/* <Stack.Screen
+          name="Otp"
+          component={OtpScreen}
+          options={{headerShown: false}}
+      /> */}
         <Stack.Screen
         name="Password"
         component={Password}
@@ -209,6 +216,16 @@ const StackNavigator = () => {
         component={HomeTownScreen}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+          name="Workplace"
+          component={WorkPlace}
+          options={{headerShown: false}}
+        />
+      <Stack.Screen
+          name="JobTitle"
+          component={JobTitleScreen}
+          options={{headerShown: false}}
+        />
       <Stack.Screen
         name="Photos"
         component={PhotoScreen}
