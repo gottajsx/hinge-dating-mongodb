@@ -96,6 +96,11 @@ app.post('/register', async (req, res) => {
 
     res.status(200).json({token});
   } catch (error) {
+    console.error('Error creating user:', {
+      message: error.message,
+      stack: error.stack,
+      cause: error.cause,
+    });
     console.log('Error creating user', error);
     res.status(500).json({error: 'Internal server error'});
   }
