@@ -2,28 +2,176 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  Pressable,
+  SafeAreaView,
+  Platform,
   Image,
+  Pressable,
+  TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useState, useCallback} from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import 'core-js/stable/atob';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Octicons from 'react-native-vector-icons/Octicons';
-import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import {jwtDecode} from 'jwt-decode';
-import axios from 'axios';
+import React, {useState,useEffect} from 'react';
+//import Ionicons from '@react-native-vector-icons/ionicons';
+//import FontAwesome from '@react-native-vector-icons/fontawesome';
+// import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
-export default function DatingType() {
+const DatingType = () => {
+  const [datingPreferences, setDatingPreferences] = useState([]);
+  const navigation = useNavigation();
+  const chooseOption = option => {
+    if (datingPreferences.includes(option)) {
+      setDatingPreferences(
+        datingPreferences.filter(selectedOption => selectedOption !== option),
+      );
+    }else{
+        setDatingPreferences([...datingPreferences,option]);
+    }
+  };
+  useEffect(() => {
+    getRegistrationProgress('Dating').then(progressData => {
+      if(progressData){
+        setDatingPreferences(progressData.datingPreferences || []);
+      }
+    })
+  },[])
+  const handleNext = () => {
+    if(datingPreferences.length > 0){
+      saveRegistrationProgress('Dating',{datingPreferences})
+    }
+    navigation.navigate("LookingFor");
+  }
   return (
-    <View>
-      <Text>Hello Monde !</Text>
-    </View>
+    <SafeAreaView
+      style={{
+        paddingTop: Platform.OS === 'android' ? 35 : 0,
+        flex: 1,
+        backgroundColor: 'white',
+      }}>
+      <View style={{marginTop: 80, marginHorizontal: 20}}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              borderWidth: 2,
+              borderColor: 'black',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <MaterialIcons name="gender-male" size={23} color="black" />
+          </View>
+          <Image
+            style={{width: 100, height: 40}}
+            source={{
+              uri: 'https://cdn-icons-png.flaticon.com/128/10613/10613685.png',
+            }}
+          />
+        </View>
+
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: 'bold',
+            fontFamily: 'GeezaPro-Bold',
+            marginTop: 15,
+          }}>
+          Who do you want to date?
+        </Text>
+
+        <Text style={{fontSize: 15, marginTop: 20, color: 'gray'}}>
+          Select all people you're open to meeting
+        </Text>
+
+        <View style={{marginTop: 30, flexDirection: 'column', gap: 12}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={{fontSize: 15, fontWeight: '500'}}>Men</Text>
+            <Pressable onPress={() => chooseOption('Men')}>
+              <FontAwesome
+                name="circle"
+                size={26}
+                color={
+                  datingPreferences.includes('Men') ? '#581845' : '#F0F0F0'
+                }
+              />
+            </Pressable>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={{fontSize: 15, fontWeight: '500'}}>Women</Text>
+            <Pressable onPress={() => chooseOption('Women')}>
+              <FontAwesome
+                name="circle"
+                size={26}
+                color={
+                  datingPreferences.includes('Women') ? '#581845' : '#F0F0F0'
+                }
+              />
+            </Pressable>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={{fontSize: 15, fontWeight: '500'}}>Everyone</Text>
+            <Pressable onPress={() => chooseOption('Everyone')}>
+              <FontAwesome
+                name="circle"
+                size={26}
+                color={
+                  datingPreferences.includes('Everyone') ? '#581845' : '#F0F0F0'
+                }
+              />
+            </Pressable>
+          </View>
+
+          <View
+            style={{
+              marginTop: 30,
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 8,
+            }}>
+            <MaterialIcons
+              name="checkbox-marked"
+              size={25}
+              color="#900C3F"
+            />
+            <Text style={{fontSize: 15}}>Visible on profile</Text>
+          </View>
+        </View>
+
+        <TouchableOpacity
+            onPress={handleNext}
+          activeOpacity={0.8}
+          style={{marginTop: 30, marginLeft: 'auto'}}>
+          <Ionicons
+            name="chevron-forward-circle-outline"
+            size={45}
+            color="#581845"
+          />
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
-}
+};
+
+export default DatingType;
+
+const styles = StyleSheet.create({});
