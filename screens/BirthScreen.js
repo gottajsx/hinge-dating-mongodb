@@ -61,7 +61,8 @@ const DateOfBirthScreen = () => {
 
       saveRegistrationProgress('Birth',{dateOfBirth})
     }
-    navigation.navigate("Location")
+    // navigation.navigate("Location")
+    navigation.navigate('Gender');
   }
   return (
     <SafeAreaView
