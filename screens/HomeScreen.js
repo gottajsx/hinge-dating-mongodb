@@ -496,7 +496,7 @@ const HomeScreen = () => {
 
                 <View style={{marginVertical: 15}}>
                   {currentProfile?.prompts.slice(0, 1).map(prompt => (
-                    <>
+                    <React.Fragment key={prompt.id}>
                       <View
                         key={prompt.id}
                         style={{
@@ -538,7 +538,7 @@ const HomeScreen = () => {
                         }}>
                         <AntDesign name="hearto" size={25} color="#C5B358" />
                       </View>
-                    </>
+                    </React.Fragment>
                   ))}
                 </View>
 
@@ -697,7 +697,9 @@ const HomeScreen = () => {
 
                 <View>
                   {currentProfile?.imageUrls?.slice(1, 3).map((item, index) => (
-                    <View key={index} style={{marginVertical: 10}}>
+                    <View 
+                      key={index} 
+                      style={{marginVertical: 10}}>
                       <Image
                         style={{
                           width: '100%',
@@ -738,7 +740,7 @@ const HomeScreen = () => {
 
                 <View style={{marginVertical: 15}}>
                   {currentProfile?.prompts.slice(1, 2).map(prompt => (
-                    <>
+                    <React.Fragment key={prompt.id}>
                       <View
                         key={prompt.id}
                         style={{
@@ -780,14 +782,16 @@ const HomeScreen = () => {
                         }}>
                         <AntDesign name="hearto" size={25} color="#C5B358" />
                       </View>
-                    </>
+                    </React.Fragment>
                   ))}
                 </View>
 
                 <View>
                   {console.log("imageUrls :", currentProfile?.imageUrls)}
                   {currentProfile?.imageUrls?.slice(3, 4).map((item, index) => (
-                    <View key={index} style={{marginVertical: 10}}>
+                    <View 
+                      key={index} 
+                      style={{marginVertical: 10}}>
                       <Image
                         style={{
                           width: '100%',
@@ -826,7 +830,7 @@ const HomeScreen = () => {
                 </View>
                 <View style={{marginVertical: 15}}>
                   {currentProfile?.prompts.slice(2, 3).map(prompt => (
-                    <>
+                    <React.Fragment key={prompt.id}>
                       <View
                         key={prompt.id}
                         style={{
@@ -868,13 +872,15 @@ const HomeScreen = () => {
                         }}>
                         <AntDesign name="hearto" size={25} color="#C5B358" />
                       </View>
-                    </>
+                    </React.Fragment>
                   ))}
                 </View>
 
                 <View>
                   {currentProfile?.imageUrls?.slice(4, 7).map((item, index) => (
-                    <View key={index} style={{marginVertical: 10}}>
+                    <View 
+                      key={index} 
+                      style={{marginVertical: 10}}>
                       <Image
                         style={{
                           width: '100%',
