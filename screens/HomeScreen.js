@@ -36,7 +36,7 @@ const HomeScreen = () => {
   const profiles = [
     {
       id: '0',
-      name: 'Shreya Singh',
+      firstName: 'Shreya Singh',
       photos: [
         {
           id: '10',
@@ -92,7 +92,7 @@ const HomeScreen = () => {
     },
     {
       id: '0',
-      name: 'Megha K',
+      firstName: 'Megha K',
       photos: [
         {
           id: '10',
@@ -148,7 +148,7 @@ const HomeScreen = () => {
     },
     {
       id: '0',
-      name: 'Neha Sharma',
+      firstName: 'Neha Sharma',
       photos: [
         {
           id: '10',
@@ -204,7 +204,7 @@ const HomeScreen = () => {
     },
     {
       id: '0',
-      name: 'Sujan anand',
+      firstName: 'Sujan anand',
       photos: [
         {
           id: '10',
@@ -260,7 +260,7 @@ const HomeScreen = () => {
     },
     {
       id: '0',
-      name: 'Sujan anand',
+      firstName: 'Sujan anand',
       photos: [
         {
           id: '10',
@@ -559,7 +559,7 @@ const HomeScreen = () => {
                             //image: currentProfile?.imageUrls[0],
                             image: currentProfile?.photos[0].image,
                             //name: currentProfile?.firstName,
-                            name: currentProfile?.name,
+                            name: currentProfile?.firstName,
                             userId: userId,
                             //likedUserId: currentProfile?._id,
                           })
