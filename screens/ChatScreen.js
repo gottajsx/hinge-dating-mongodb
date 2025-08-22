@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 import 'core-js/stable/atob';
 import UserChat from '../components/UserChat';
 import { useFocusEffect } from '@react-navigation/native';
+import { BASE_URL } from '../urls/url';
 
 
 const ChatScreen = () => {
@@ -25,7 +26,7 @@ const ChatScreen = () => {
   const fetchMatches = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/get-matches/${userId}`,
+        `${BASE_URL}/get-matches/${userId}`,
       );
       setMatches(response.data.matches);
     } catch (error) {

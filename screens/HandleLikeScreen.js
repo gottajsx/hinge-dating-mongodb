@@ -12,6 +12,7 @@ import React from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
+import { BASE_URL } from '../urls/url';
 
 
 const HandleLikeScreen = () => {
@@ -22,7 +23,7 @@ const HandleLikeScreen = () => {
     try {
       const currentUserId = route?.params?.userId; // Example currentUserId
       const selectedUserId = route?.params?.selectedUserId; // Example selectedUserId
-      const response = await axios.post('http://localhost:3000/create-match', {
+      const response = await axios.post(`${BASE_URL}/create-match`, {
         currentUserId,
         selectedUserId,
       });

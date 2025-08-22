@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
 import 'core-js/stable/atob';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { BASE_URL } from '../urls/url';
 
 
 const LikesScreen = () => {
@@ -34,7 +35,7 @@ const LikesScreen = () => {
   const fetchReceivedLikes = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/received-likes/${userId}`,
+        `${BASE_URL}/received-likes/${userId}`,
       );
       const receivedLikes = response.data.receivedLikes;
       console.log(receivedLikes); // Handle received likes in your frontend

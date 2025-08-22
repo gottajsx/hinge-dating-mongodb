@@ -27,6 +27,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
+import { BASE_URL } from '../urls/url';
 
 
 const HomeScreen = () => {
@@ -418,7 +419,7 @@ const HomeScreen = () => {
   const fetchMatches = async () => {
     try {
       const response = await axios.get(
-        `http://10.0.2.2:3000/matches?userId=${userId}`,
+        `${BASE_URL}/matches?userId=${userId}`,
       );
       const matches = response.data.matches;
       setProfilesData(matches);

@@ -18,6 +18,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {jwtDecode} from 'jwt-decode';
+import { BASE_URL } from '../urls/url';
 
 
 const ProfileScreen = () => {
@@ -59,7 +60,7 @@ const ProfileScreen = () => {
   const getUserDetails = async () => {
     try {
       // Make a GET request to the endpoint with the userId parameter
-      const response = await axios.get(`http://localhost:3000/users/${userId}`);
+      const response = await axios.get(`${BASE_URL}/users/${userId}`);
 
       // Check if the response contains the user data
       if (response.status === 200) {
