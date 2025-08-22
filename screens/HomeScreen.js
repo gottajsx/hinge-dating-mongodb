@@ -37,6 +37,14 @@ const HomeScreen = () => {
     {
       id: '0',
       firstName: 'Shreya Singh',
+      imageUrls: [
+        'https://www.instagram.com/p/C2rAwvAIDhs/media/?size=l',
+        'https://www.instagram.com/p/Czc7MTGojOL/media/?size=l',
+        'https://www.instagram.com/p/C1WBQCmoGGg/media/?size=l',
+        'https://www.instagram.com/p/CkfLYLvoZdY/media/?size=l',
+        'https://www.instagram.com/p/CgyWempo_iI/media/?size=l',
+        'https://www.instagram.com/p/CRyLfQrBXLf/media/?size=l',
+      ],
       photos: [
         {
           id: '10',
@@ -93,6 +101,14 @@ const HomeScreen = () => {
     {
       id: '0',
       firstName: 'Megha K',
+      imageUrls: [
+        'https://www.instagram.com/p/C27SU9sNMXO/media/?size=l',
+        'https://www.instagram.com/p/C2w8cRStX2T/media/?size=l',
+        'https://www.instagram.com/p/Cy8XwyCNeCR/media/?size=l',
+        'https://www.instagram.com/p/CmeiXSoyMXL/media/?size=l',
+        'https://www.instagram.com/p/CGm4TXAFPBw/media/?size=l',
+        'https://www.instagram.com/p/C1ZgN1ZNSO7/media/?size=l',
+      ],
       photos: [
         {
           id: '10',
@@ -149,6 +165,14 @@ const HomeScreen = () => {
     {
       id: '0',
       firstName: 'Neha Sharma',
+      imageUrls: [
+        'https://www.instagram.com/p/CnV-OCdh_if/media/?size=l',
+        'https://www.instagram.com/p/C3Nhxdop4ff/media/?size=l',
+        'https://www.instagram.com/p/C1Rzh7KJ0OY/media/?size=l',
+        'https://www.instagram.com/p/CyD-gT3JOpy/media/?size=l',
+        'https://www.instagram.com/p/CwNmWmnpP-q/media/?size=l',
+        'https://www.instagram.com/p/Cu_5SWsJ5Fu/media/?size=l',
+      ],
       photos: [
         {
           id: '10',
@@ -205,6 +229,14 @@ const HomeScreen = () => {
     {
       id: '0',
       firstName: 'Sujan anand',
+      imageUrls: [
+        'https://www.instagram.com/p/C14N5gcpgYp/media/?size=l',
+        'https://www.instagram.com/p/C01aN_tKsO7/media/?size=l',
+        'https://www.instagram.com/p/C0dwBrJKn2Z/media/?size=l',
+        'https://www.instagram.com/p/CzbOYtRKaPz/media/?size=l',
+        'https://www.instagram.com/p/Cyddsocq-fu/media/?size=l',
+        'https://www.instagram.com/p/Cu62APUJnUt/media/?size=l',
+      ],
       photos: [
         {
           id: '10',
@@ -261,6 +293,14 @@ const HomeScreen = () => {
     {
       id: '0',
       firstName: 'Sujan anand',
+      imageUrls: [
+        'https://www.instagram.com/p/C2JW1pRogTV/media/?size=l',
+        'https://www.instagram.com/p/C3ITT06oZ23/media/?size=l',
+        'https://www.instagram.com/p/Cz3cMylo2W-/media/?size=l',
+        'https://www.instagram.com/p/CtwXJt0SSEM/media/?size=l',
+        'https://www.instagram.com/p/CmrDFESqzjO/media/?size=l',
+        'https://www.instagram.com/p/CeD_9l3hR8h/media/?size=l',
+      ],
       photos: [
         {
           id: '10',
@@ -535,10 +575,10 @@ const HomeScreen = () => {
                 </View>
               </View>
 
-              {console.log("photos image : ", currentProfile?.photos[0]?.image)}
+              {console.log("photos image : ", currentProfile?.imageUrls[0])}
               <View style={{marginVertical: 15}}>
                 <View>
-                  {currentProfile?.photos?.length >= 0 && (
+                  {currentProfile?.imageUrls?.length > 0 && (
                     
                     <View>
                       <Image
@@ -550,14 +590,14 @@ const HomeScreen = () => {
                         }}
                         source={{
                           //uri: currentProfile?.imageUrls[0],
-                          uri: currentProfile?.photos[0].image,
+                          uri: currentProfile?.imageUrls[0],
                         }}
                       />
                       <Pressable
                         onPress={() =>
                           navigation.navigate('SendLike', {
                             //image: currentProfile?.imageUrls[0],
-                            image: currentProfile?.photos[0].image,
+                            image: currentProfile?.imageUrls[0],
                             //name: currentProfile?.firstName,
                             name: currentProfile?.firstName,
                             userId: userId,
