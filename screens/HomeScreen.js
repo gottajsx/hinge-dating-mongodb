@@ -49,17 +49,17 @@ const HomeScreen = () => {
       prompts: [
         {
           id: '1',
-          prompt: 'This year, I really want to',
+          question: 'This year, I really want to',
           answer: 'Turn Vegan',
         },
         {
           id: '2',
-          prompt: 'Best travel story',
+          question: 'Best travel story',
           answer: 'Hitchhiking in Germany',
         },
         {
           id: '3',
-          prompt: 'I go crazy for',
+          question: 'I go crazy for',
           answer: 'Pani Puri',
         },
       ],
@@ -87,17 +87,17 @@ const HomeScreen = () => {
       prompts: [
         {
           id: '1',
-          prompt: "What's your favorite hobby?",
+          question: "What's your favorite hobby?",
           answer: 'Painting landscapes',
         },
         {
           id: '2',
-          prompt: 'Describe your dream job.',
+          question: 'Describe your dream job.',
           answer: 'Wildlife photographer',
         },
         {
           id: '3',
-          prompt: "One thing you'd change about the world?",
+          question: "One thing you'd change about the world?",
           answer: 'Eliminate poverty',
         },
       ],
@@ -125,17 +125,17 @@ const HomeScreen = () => {
       prompts: [
         {
           id: '4',
-          prompt: 'What inspires you the most?',
+          question: 'What inspires you the most?',
           answer: 'Nature and its beauty',
         },
         {
           id: '5',
-          prompt: 'If you could have any superpower, what would it be?',
+          question: 'If you could have any superpower, what would it be?',
           answer: 'Teleportation',
         },
         {
           id: '6',
-          prompt: 'Your favorite book/movie of all time?',
+          question: 'Your favorite book/movie of all time?',
           answer: 'The Lord of the Rings trilogy',
         },
       ],
@@ -163,17 +163,17 @@ const HomeScreen = () => {
       prompts: [
         {
           id: '7',
-          prompt: 'What is  your proudest accomplishment?',
+          question: 'What is  your proudest accomplishment?',
           answer: 'Running a marathon',
         },
         {
           id: '8',
-          prompt: 'If you could live in any era, which one would it be?',
+          question: 'If you could live in any era, which one would it be?',
           answer: 'The Roaring Twenties',
         },
         {
           id: '9',
-          prompt: 'What is your favorite way to relax after a long day?',
+          question: 'What is your favorite way to relax after a long day?',
           answer: 'Listening to music and taking a hot bath',
         },
       ],
@@ -201,17 +201,17 @@ const HomeScreen = () => {
       prompts: [
         {
           id: '7',
-          prompt: 'What is  your proudest accomplishment?',
+          question: 'What is  your proudest accomplishment?',
           answer: 'Running a marathon',
         },
         {
           id: '8',
-          prompt: 'If you could live in any era, which one would it be?',
+          question: 'If you could live in any era, which one would it be?',
           answer: 'The Roaring Twenties',
         },
         {
           id: '9',
-          prompt: 'What is your favorite way to relax after a long day?',
+          question: 'What is your favorite way to relax after a long day?',
           answer: 'Listening to music and taking a hot bath',
         },
       ],
@@ -507,7 +507,7 @@ const HomeScreen = () => {
                           justifyContent: 'center',
                         }}>
                         <Text style={{fontSize: 15, fontWeight: '500'}}>
-                          {currentProfile?.prompts[0].prompt}
+                          {currentProfile?.prompts[0].question}
                         </Text>
                         <Text
                           style={{
@@ -751,7 +751,7 @@ const HomeScreen = () => {
                           justifyContent: 'center',
                         }}>
                         <Text style={{fontSize: 15, fontWeight: '500'}}>
-                          {prompt.prompt}
+                          {prompt.question}
                         </Text>
                         <Text
                           style={{
@@ -841,7 +841,7 @@ const HomeScreen = () => {
                           justifyContent: 'center',
                         }}>
                         <Text style={{fontSize: 15, fontWeight: '500'}}>
-                          {prompt.prompt}
+                          {prompt.question}
                         </Text>
                         <Text
                           style={{
