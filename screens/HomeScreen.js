@@ -876,7 +876,7 @@ const HomeScreen = () => {
                           justifyContent: 'center',
                         }}>
                         <Text style={{fontSize: 15, fontWeight: '500'}}>
-                          {prompt.question}
+                          {prompt.prompt}
                         </Text>
                         <Text
                           style={{
@@ -964,7 +964,7 @@ const HomeScreen = () => {
                           justifyContent: 'center',
                         }}>
                         <Text style={{fontSize: 15, fontWeight: '500'}}>
-                          {prompt.question}
+                          {prompt.prompt}
                         </Text>
                         <Text
                           style={{
