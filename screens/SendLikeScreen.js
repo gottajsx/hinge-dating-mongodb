@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import PreFinalScreen from './PreFinalScreen';
 import axios from 'axios';
+import { BASE_URL } from '../urls/url';
 
 
 const SendLikeScreen = () => {
@@ -23,7 +24,7 @@ const SendLikeScreen = () => {
   console.log(route.params?.userId);
   const likeProfile = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/like-profile', {
+      const response = await axios.post(`${BASE_URL}/like-profile`, {
         userId: route.params.userId,
         likedUserId: route.params.likedUserId,
         image: route?.params?.image,
