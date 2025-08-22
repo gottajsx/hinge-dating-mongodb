@@ -397,9 +397,11 @@ const HomeScreen = () => {
 
   const navigateToNextProfile = () => {
     const nextIndex = currentProfileIndex + 1;
-    if (nextIndex <= profilesData.length) {
+    //if (nextIndex <= profilesData.length) {
+    if (nextIndex <= profiles.length) {
       setCurrentProfileIndex(nextIndex);
-      setCurrentProfile(profilesData[nextIndex]);
+      //setCurrentProfile(profilesData[nextIndex]);
+      setCurrentProfile(profiles[nextIndex]);
       navigation.navigate('Animation');
       console.log("profile index incremented")
     } else {
