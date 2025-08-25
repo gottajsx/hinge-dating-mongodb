@@ -34,6 +34,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [option, setOption] = useState('Compatible');
   const [profilesData, setProfilesData] = useState([]);
+  const [users, setUsers] = useState([]);
   const profiles = [
     {
       id: '0',
@@ -240,6 +241,21 @@ const HomeScreen = () => {
 
     fetchUser();
   }, []);
+
+  useEffect(() => {
+    console.log('fetch users');
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/users`); 
+        setUsers(response.data);
+        console.log("fetched users:", response.data); 
+      } catch (error) {
+        console.log("Cannot fetch users")
+      }
+    };
+
+    fetchUsers();
+  }, [])
 
   console.log('userId', userId);
 

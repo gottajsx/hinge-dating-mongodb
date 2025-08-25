@@ -92,6 +92,26 @@ app.post('/register', async (req, res) => {
 //   }
 // });
 
+//fetch all users
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+
+    if (!users) {
+      return res.status(500).json({message: 'Users not found'});
+    }
+    else {
+      console.log("Some users fetched")
+    }
+
+    return res.status(200).json(users);
+
+  } catch (error) {
+    return res.status(500).json({message: 'Error fetching users'});
+  }
+});
+
+
 //fetch users data
 app.get('/users/:userId', async (req, res) => {
   try {
