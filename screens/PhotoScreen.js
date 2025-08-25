@@ -11,19 +11,76 @@ import {
   Button,
 } from 'react-native';
 import React, {useState,useEffect} from 'react';
-// import Ionicons from '@react-native-vector-icons/ionicons';
-// import EvilIcons from '@react-native-vector-icons/evil-icons';
-// import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from "expo-image-picker";
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
 const PhotoScreen = () => {
+  const CLOUD_NAME = "ddpc0mido";
+  const UPLOAD_PRESET = "default";
+
   const [imageUrls, setImageUrls] = useState(['', '', '', '', '', '']);
   const [imageUrl, setImageUrl] = useState('');
   const navigation = useNavigation();
+
+  const pickImage = async (index) => {
+    // demander permission
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      Alert.alert("Permission requise", "Accès aux images refusé.");
+      return;
+    }
+
+    // ouvrir galerie
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (result.canceled) return;
+
+    const asset = result.assets[0];
+
+    try {
+      const formData = new FormData();
+      formData.append("file", {
+        uri: asset.uri,
+        type: "image/jpeg",
+        name: `upload_${Date.now()}.jpg`,
+      });
+      formData.append("upload_preset", UPLOAD_PRESET);
+
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.secure_url) {
+        const newImages = [...imageUrls];
+        newImages[index] = data.secure_url;
+        setImageUrls(newImages);
+      } else {
+        Alert.alert("Erreur", "Upload échoué");
+        console.log("Cloudinary error:", data);
+      }
+    } catch (err) {
+      Alert.alert("Erreur", "Impossible d’uploader l’image");
+      console.error(err);
+    }
+  };
+
+
+
   const handleAddImage = () => {
     const index = imageUrls?.findIndex(url => url === '');
     if (index !== -1) {
@@ -88,6 +145,7 @@ const PhotoScreen = () => {
           <View style={{flexDirection: 'row', alignItems: 'center', gap: 20}}>
             {imageUrls?.slice(0, 3).map((url, index) => (
               <Pressable
+                onPress={() => pickImage(index)}
                 style={{
                   borderColor: '#581845',
                   borderWidth: url ? 0 : 2,
@@ -121,6 +179,7 @@ const PhotoScreen = () => {
           <View style={{flexDirection: 'row', alignItems: 'center', gap: 20}}>
             {imageUrls?.slice(3, 6).map((url, index) => (
               <Pressable
+                onPress={() => pickImage(index + 3)}
                 style={{
                   borderColor: '#581845',
                   borderWidth: url ? 0 : 2,
@@ -143,7 +202,7 @@ const PhotoScreen = () => {
                     }}
                   />
                 ) : (
-                  <EvilIcons name="image" size={22} color="black" />
+                  <EvilIcons name="image" size={66} color="black" />
                 )}
               </Pressable>
             ))}
