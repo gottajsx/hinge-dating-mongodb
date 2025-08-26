@@ -109,7 +109,22 @@ const NameScreen = () => {
           <Text style={{fontSize: 15, color: 'gray', fontWeight: '500'}}>
             Last name is optional
           </Text>
+          <TextInput
+            placeholder="Nick Name"
+            placeholderTextColor={'#BEBEBE'}
+            style={{
+              width: 340,
+              marginVertical: 10,
+              marginTop: 25,
+              borderBottomColor: 'black',
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              fontFamily: 'GeezaPro-Bold',
+              fontSize: firstName ? 22 : 22,
+            }}
+          />
         </View>
+
 
         <TouchableOpacity
           onPress={handleNext}
