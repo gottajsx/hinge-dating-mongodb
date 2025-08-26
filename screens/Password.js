@@ -8,52 +8,34 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import React from 'react';
-//import MaterialDesignIcons from '@react-native-vector-icons/material-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-//import Ionicons from '@react-native-vector-icons/ionicons';
 import { Ionicons } from '@expo/vector-icons';
 import {useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import { saveRegistrationProgress } from '../utils/registrationUtils';
-import axios from 'axios';
-import { BASE_URL } from '../urls/url';
+
 
 const PasswordScreen = () => {
   const [password, setPassword] = useState('');
   const route = useRoute();
   const navigation = useNavigation();
   const email = route?.params?.email;
-  const handleSendOtp = async () => {
-    if(!email){
+  const [errorMessage, setErrorMessage] = useState('');
+ 
+  const handleNext = () => {
+    const trimmedPassword = password.trim();
+    if (trimmedPassword.length < 6) {
+      setErrorMessage("⚠️ Password must be at least 6 characters!");
       return;
     }
- 
-    // SSC to bypass otp sequence
-    /* try{
-      const response = await axios.post(`${BASE_URL}/sendOtp`,{
-        email,
-        password
-      });
-      console.log(response.data.message);
-      navigation.navigate('Otp', {email});
-    } catch(error){
-      console.log("Error sending the OTP",error)
-    } */
-
-    console.log("SSC - Temporary bypass otp sending")
-    navigation.navigate("Birth"); // SSC to bypass Otp sequence
-  }
-  const handleNext = () => {
-    if(password.trim() !== ''){
-      saveRegistrationProgress('Password',{password});
+    if (trimmedPassword.length > 12) {
+      setErrorMessage("⚠️ Password must contain 12 characters maximum!");
+      return;
     }
-    // navigation.navigate('Otp', {email});
-
-    // SSC to bypass otp sequence
-    // handleSendOtp();
+    saveRegistrationProgress('Password',{password});
     navigation.navigate("Birth"); 
   };
+
   return (
     <SafeAreaView
       style={{
@@ -96,8 +78,14 @@ const PasswordScreen = () => {
 
         <TextInput
           value={password}
-          onChangeText={text => setPassword(text)}
+          onChangeText={text => {
+            setPassword(text);
+              if (errorMessage) {
+                setErrorMessage("");
+              }
+          }}
           autoFocus={true}
+          keyboardType="default"
           placeholder="Enter your Password"
           secureTextEntry={true}
           placeholderTextColor={'#BEBEBE'}
@@ -113,14 +101,27 @@ const PasswordScreen = () => {
           }}
         />
 
-        <Text style={{color: 'gray', marginTop: 7, fontSize: 15}}>
-          Note: You details will be safe with us
-        </Text>
+        {errorMessage ? (
+          <Text style={{ 
+            color: 'red', 
+            marginTop: 5, 
+            fontSize: 16,
+              fontWeight: 'bold',
+          }}>
+            {errorMessage}
+          </Text>
+          ) : null
+        }
 
         <TouchableOpacity
           onPress={handleNext}
           activeOpacity={0.8}
-          style={{marginTop: 30, marginLeft: 'auto'}}>
+          disabled={password.trim() === ''}
+          style={{
+            marginTop: 30, 
+            marginLeft: 'auto',
+            opacity: password.trim() === '' ? 0.3 : 1,
+          }}>
           <Ionicons
             name="chevron-forward-circle-outline"
             size={45}
