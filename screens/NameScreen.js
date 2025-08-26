@@ -22,7 +22,6 @@ const NameScreen = () => {
   const navigation = useNavigation();
   const [errorMessage, setErrorMessage] = useState('');
   
-
   useEffect(() => {
     getRegistrationProgress('Name').then(progressData => {
       if (progressData) {
@@ -30,7 +29,6 @@ const NameScreen = () => {
       }
     });
   }, []);
-
 
   const handleNext = () => {
     const trimmedName = firstName.trim();
@@ -50,7 +48,6 @@ const NameScreen = () => {
     saveRegistrationProgress('Name', {firstName});
     navigation.navigate('Email');
   };
-
 
   return (
     <SafeAreaView

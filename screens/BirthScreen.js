@@ -8,12 +8,9 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import React, {useRef, useState,useEffect} from 'react';
-// import Fontisto from '@react-native-vector-icons/fontisto';
-// import Ionicons from '@react-native-vector-icons/ionicons';
+import {useRef, useState,useEffect} from 'react';
 import { Ionicons } from '@expo/vector-icons';
-//import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
@@ -61,7 +58,7 @@ const DateOfBirthScreen = () => {
 
       saveRegistrationProgress('Birth',{dateOfBirth})
     }
-    // navigation.navigate("Location")
+    
     navigation.navigate('Gender');
   }
   return (
@@ -83,7 +80,7 @@ const DateOfBirthScreen = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <MaterialIcons
+            <MaterialCommunityIcons
               name="calendar-blank"
               size={23}
               color="black"
