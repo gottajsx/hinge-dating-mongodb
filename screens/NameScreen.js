@@ -8,8 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-//import Ionicons from '@react-native-vector-icons/ionicons';
+import {useState, useEffect} from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -17,9 +16,13 @@ import {
   saveRegistrationProgress,
 } from '../utils/registrationUtils';
 
+
 const NameScreen = () => {
   const [firstName, setFirstName] = useState('');
   const navigation = useNavigation();
+  const [errorMessage, setErrorMessage] = useState('');
+
+
   useEffect(() => {
     getRegistrationProgress('Name').then(progressData => {
       if (progressData) {
@@ -27,12 +30,28 @@ const NameScreen = () => {
       }
     });
   }, []);
+
+
   const handleNext = () => {
-    if (firstName.trim() !== '') {
-      saveRegistrationProgress('Name', {firstName});
+    const trimmedName = firstName.trim();
+    if (trimmedName.length < 3) {
+      setErrorMessage("⚠️ First name must be at least 3 characters!");
+      return;
     }
+    if (trimmedName.length >18) {
+      setErrorMessage("⚠️ First name must contain 18 letters maximum");
+      return;
+    }
+    const nameRegex = /^[A-Za-z0-9-]+$/;
+    if (!nameRegex.test(trimmedName)) {
+      setErrorMessage("⚠️ First name can only contain letters, numbers, or hyphens (-).");
+      return;
+    }
+    saveRegistrationProgress('Name', {firstName});
     navigation.navigate('Email');
   };
+
+
   return (
     <SafeAreaView
       style={{
@@ -41,7 +60,7 @@ const NameScreen = () => {
         backgroundColor: 'white',
       }}>
       <Text style={{marginTop: 50, textAlign: 'center', color: 'gray'}}>
-        NO BACKGROUND CHECKS ARE CONDUCTED
+        {/* NO BACKGROUND CHECKS ARE CONDUCTED */}
       </Text>
 
       <View style={{marginTop: 30, marginHorizontal: 20}}>
@@ -77,8 +96,15 @@ const NameScreen = () => {
           </Text>
           <TextInput
             value={firstName}
-            onChangeText={text => setFirstName(text)}
+            onChangeText={text => {
+              setFirstName(text);
+              if (errorMessage) {
+                setErrorMessage("");
+              }
+            }}
             autoFocus={true}
+            keyboardType="default"
+            autoCapitalize="words"
             placeholder="First name (required)"
             placeholderTextColor={'#BEBEBE'}
             style={{
@@ -92,26 +118,22 @@ const NameScreen = () => {
               fontSize: firstName ? 22 : 22,
             }}
           />
+          {errorMessage ? (
+            <Text style={{ 
+              color: 'red', 
+              marginTop: 5, 
+              fontSize: 16,
+              fontWeight: 'bold',
+            }}>
+              {errorMessage}
+            </Text>
+            ) : null
+          }
           <TextInput
             placeholder="Last Name"
             placeholderTextColor={'#BEBEBE'}
-            style={{
-              width: 340,
-              marginVertical: 10,
-              marginTop: 25,
-              borderBottomColor: 'black',
-              borderBottomWidth: 1,
-              paddingBottom: 10,
-              fontFamily: 'GeezaPro-Bold',
-              fontSize: firstName ? 22 : 22,
-            }}
-          />
-          <Text style={{fontSize: 15, color: 'gray', fontWeight: '500'}}>
-            Last name is optional
-          </Text>
-          <TextInput
-            placeholder="Nick Name"
-            placeholderTextColor={'#BEBEBE'}
+            keyboardType="default"
+            autoCapitalize="words"
             style={{
               width: 340,
               marginVertical: 10,
@@ -124,12 +146,15 @@ const NameScreen = () => {
             }}
           />
         </View>
-
-
         <TouchableOpacity
           onPress={handleNext}
           activeOpacity={0.8}
-          style={{marginTop: 30, marginLeft: 'auto'}}>
+          disabled={firstName.trim() === ''}
+          style={{
+            marginTop: 30, 
+            marginLeft: 'auto',
+            opacity: firstName.trim() === '' ? 0.3 : 1,
+          }}>
           <Ionicons
             name="chevron-forward-circle-outline"
             size={45}
