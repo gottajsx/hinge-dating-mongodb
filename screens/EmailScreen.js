@@ -8,9 +8,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-//import Fontisto from '@react-native-vector-icons/fontisto';
-//import Ionicons from '@react-native-vector-icons/ionicons';
+import {useState, useEffect} from 'react';
 import { Fontisto } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
@@ -19,9 +17,12 @@ import {
   saveRegistrationProgress,
 } from '../utils/registrationUtils';
 
+
 const EmailScreen = () => {
   const [email, setEmail] = useState('');
   const navigation = useNavigation();
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     getRegistrationProgress('Email').then(progressData => {
       if (progressData) {
@@ -29,14 +30,20 @@ const EmailScreen = () => {
       }
     });
   }, []);
+
   const handleNext = () => {
-    if (email.trim() !== '') {
-      saveRegistrationProgress('Email', {email});
+    const trimmedEmail = email.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setErrorMessage('⚠️ Enter a valid email address');
+      return;
     }
+    saveRegistrationProgress('Email', {email});
     navigation.navigate('Password', {
       email: email,
     });
   };
+
   return (
     <SafeAreaView
       style={{
@@ -82,7 +89,12 @@ const EmailScreen = () => {
 
         <TextInput
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={text => {
+            setEmail(text)
+            if (errorMessage) {
+              setErrorMessage("");
+            }
+          }}
           autoFocus={true}
           placeholder="Enter your email"
           placeholderTextColor={'#BEBEBE'}
@@ -102,10 +114,27 @@ const EmailScreen = () => {
           Note: You will be asked to verify your email
         </Text>
 
+        {errorMessage ? (
+          <Text style={{ 
+            color: 'red', 
+            marginTop: 5, 
+            fontSize: 16,
+            fontWeight: 'bold',
+          }}>
+              {errorMessage}
+          </Text>
+          ) : null
+        }
+
         <TouchableOpacity
           onPress={handleNext}
           activeOpacity={0.8}
-          style={{marginTop: 30, marginLeft: 'auto'}}>
+          disabled={email.trim() === ''}
+          style={{
+            marginTop: 30, 
+            marginLeft: 'auto',
+            opacity: email.trim() === '' ? 0.3 : 1,
+          }}>
           <Ionicons
             name="chevron-forward-circle-outline"
             size={45}

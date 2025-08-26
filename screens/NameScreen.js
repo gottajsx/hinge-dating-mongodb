@@ -21,7 +21,7 @@ const NameScreen = () => {
   const [firstName, setFirstName] = useState('');
   const navigation = useNavigation();
   const [errorMessage, setErrorMessage] = useState('');
-
+  
 
   useEffect(() => {
     getRegistrationProgress('Name').then(progressData => {
