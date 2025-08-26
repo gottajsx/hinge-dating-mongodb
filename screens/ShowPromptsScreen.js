@@ -3,14 +3,19 @@ import {
   Text,
   View,
   SafeAreaView,
+  TouchableOpacity,
+  Platform,
   Pressable,
   TextInput,
+  Image,
   Button,
 } from "react-native";
 import React, { useState } from "react";
-import { Entypo } from "@expo/vector-icons"; // ✅ Expo-friendly import
+import { Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-import Modal from "react-native-modal";       // ✅ Expo-friendly modal
+import Modal from "react-native-modal";
 
 const ShowPromptsScreen = () => {
   const navigation = useNavigation();
@@ -71,14 +76,38 @@ const ShowPromptsScreen = () => {
     <>
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.link}>View all</Text>
-          <Text style={styles.title}>Prompts</Text>
+        {/* <View style={styles.header}>
+          <Text style={styles.link}></Text>
+          <Text style={styles.title}></Text>
           <Entypo name="cross" size={22} color="black" />
-        </View>
+        </View> */}
 
         {/* Categories */}
-        <View style={styles.categories}>
+        <View style={{marginTop: 80, marginHorizontal: 20}}>
+        <View
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              borderWidth: 2,
+              borderColor: 'black',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <MaterialIcons name="location-enter" size={23} color="black" />
+          </View>
+          <Image
+            style={{width: 100, height: 40}}
+            source={{
+              uri: 'https://cdn-icons-png.flaticon.com/128/10613/10613685.png',
+            }}
+          />
+        <View 
+          style={[
+            styles.categories,
+            { paddingTop: Platform.OS === "android" ? 35 : 0 },
+          ]}
+        >
           {promptss.map((item, index) => (
             <Pressable
               key={index}
@@ -123,7 +152,20 @@ const ShowPromptsScreen = () => {
             </View>
           ))}
         </View>
+         <TouchableOpacity
+            onPress={() => navigation.goBack()}
+          activeOpacity={0.8}
+          style={{marginTop: 30, alignSelf: "center"}}>
+          <Ionicons
+            name="chevron-back-circle-outline"
+            size={45}
+            color="#581845"
+          />
+        </TouchableOpacity>
+        </View>
       </SafeAreaView>
+
+     
 
       {/* Modal */}
       <Modal
@@ -146,10 +188,14 @@ const ShowPromptsScreen = () => {
               placeholder="Enter Your Answer"
             />
           </View>
-          <Button onPress={addPrompt} title="Add" />
+          <Button onPress={addPrompt} title="Addrrrrrr" />
         </View>
       </Modal>
+      
     </>
+
+    
+    
   );
 };
 

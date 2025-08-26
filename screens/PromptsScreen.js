@@ -9,8 +9,6 @@ import {
   Pressable,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-//import Ionicons from '@react-native-vector-icons/ionicons';
-//import AntDesign from '@react-native-vector-icons/ant-design';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -25,8 +23,8 @@ const PromptsScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   useEffect(() => {
-    if (route?.params?.updatedPrompts) {
-      setPrompts(route?.params?.updatedPrompts);
+    if (route?.params?.prompts) {
+      setPrompts(route?.params.prompts)
     }
   }, [route.params]);
   const handleNext = () => {
