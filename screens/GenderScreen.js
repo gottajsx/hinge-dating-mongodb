@@ -9,12 +9,9 @@ import {
   Pressable,
 } from 'react-native';
 import React, {useState,useEffect} from 'react';
-//import Ionicons from '@react-native-vector-icons/ionicons';
 import { Ionicons } from '@expo/vector-icons';
-//import FontAwesome from '@react-native-vector-icons/fontawesome';
 import { FontAwesome } from '@expo/vector-icons';
-//import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
@@ -32,7 +29,7 @@ const GenderScreen = () => {
     if(gender.trim() != ''){
       saveRegistrationProgress('Gender',{gender});
     }
-    navigation.navigate("Type");
+    navigation.navigate("LookingFor");
   }
   return (
     <SafeAreaView
@@ -53,7 +50,7 @@ const GenderScreen = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <MaterialIcons name="gender-male" size={23} color="black" />
+            <MaterialCommunityIcons name="gender-male" size={23} color="black" />
           </View>
           <Image
             style={{width: 100, height: 40}}
@@ -127,26 +124,17 @@ const GenderScreen = () => {
               />
             </Pressable>
           </View>
-
-          <View
-          style={{
-            marginTop: 30,
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 8,
-          }}>
-         <MaterialIcons name="checkbox-marked" size={25} color="#900C3F" />
-          <Text style={{fontSize: 15}}>Visible on profile</Text>
-        </View>
-
-
-
         </View>
 
         <TouchableOpacity
-            onPress={handleNext}
+          onPress={handleNext}
           activeOpacity={0.8}
-          style={{marginTop: 30, marginLeft: 'auto'}}>
+          disabled={gender.trim() === ''}
+          style={{
+            marginTop: 30, 
+            marginLeft: 'auto',
+            opacity: gender.trim() === '' ? 0.3 : 1,
+          }}>
           <Ionicons
             name="chevron-forward-circle-outline"
             size={45}
