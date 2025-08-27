@@ -29,7 +29,7 @@ const GenderScreen = () => {
     if(gender.trim() != ''){
       saveRegistrationProgress('Gender',{gender});
     }
-    navigation.navigate("LookingFor");
+    navigation.navigate("Dating");
   }
   return (
     <SafeAreaView
