@@ -23,6 +23,8 @@ const ShowPromptsScreen = () => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const MAX_LENGTH = 100;
 
   const promptss = [
     {
@@ -33,7 +35,7 @@ const ShowPromptsScreen = () => {
         { id: "11", question: "Typical Sunday" },
         { id: "12", question: "I go crazy for" },
         { id: "13", question: "Unusual Skills" },
-        { id: "14", question: "My greatest strenght" },
+        { id: "14", question: "My greatest strength" },
         { id: "15", question: "My simple pleasures" },
         { id: "16", question: "A life goal of mine" },
       ],
@@ -54,11 +56,18 @@ const ShowPromptsScreen = () => {
   ];
 
   const openModal = (item) => {
+    const alreadyAnswered = prompts.find(p => p.question === item.question);
+    if (alreadyAnswered) {
+      setErrorMessage("You have already answered this question.");
+      return;
+    }
+    setErrorMessage("");
+    setQuestion(item.question);
     setModalVisible(true);
-    setQuestion(item?.question);
   };
 
   const addPrompt = () => {
+    if (answer.trim() === "") return; // ignore empty answer
     const newPrompt = { question, answer };
     const updatedPrompts = [...prompts, newPrompt];
     setPrompts(updatedPrompts);
@@ -67,7 +76,7 @@ const ShowPromptsScreen = () => {
     setModalVisible(false);
 
     if (updatedPrompts.length === 3) {
-      navigation.navigate("Prompts", { prompts: updatedPrompts });
+      navigation.navigate("Prompts", { prompts: JSON.parse(JSON.stringify(updatedPrompts)) });
     }
   };
 
@@ -132,30 +141,42 @@ const ShowPromptsScreen = () => {
 
         {/* Questions */}
         <View style={{ marginTop: 20, marginHorizontal: 12 }}>
+          {errorMessage.length > 0 && (
+            <Text style={{ color: "red", marginBottom: 10 }}>{errorMessage}</Text>
+          )}
+
           {promptss.map((item, index) => (
-            <View key={index}>
-              {option === item.name && (
-                <View>
-                  {item.questions.map((q, qIndex) => (
+            option === item.name && (
+              <View key={index}>
+                {item.questions.map((q, qIndex) => {
+                  const isAnswered = prompts.find(p => p.question === q.question);
+                  return (
                     <Pressable
                       key={qIndex}
                       onPress={() => openModal(q)}
                       style={{ marginVertical: 12 }}
+                      disabled={!!isAnswered} // empêche la modale
                     >
-                      <Text style={{ fontSize: 15, fontWeight: "500" }}>
+                      <Text style={{
+                        fontSize: 15,
+                        fontWeight: "500",
+                        color: isAnswered ? "gray" : "black"
+                      }}>
                         {q.question}
                       </Text>
                     </Pressable>
-                  ))}
-                </View>
-              )}
-            </View>
+                  );
+                })}
+              </View>
+            )
           ))}
         </View>
+
          <TouchableOpacity
             onPress={() => navigation.goBack()}
-          activeOpacity={0.8}
-          style={{marginTop: 30, alignSelf: "center"}}>
+            activeOpacity={0.8}
+            style={{marginTop: 30, alignSelf: "center"}}
+          >
           <Ionicons
             name="chevron-back-circle-outline"
             size={45}
@@ -165,8 +186,6 @@ const ShowPromptsScreen = () => {
         </View>
       </SafeAreaView>
 
-     
-
       {/* Modal */}
       <Modal
         isVisible={isModalVisible}
@@ -174,7 +193,7 @@ const ShowPromptsScreen = () => {
         onSwipeComplete={() => setModalVisible(false)}
         swipeDirection={["down"]}
         style={styles.modal}
-        animationIn="slideInUp"   // ✅ équivalent de SlideAnimation bottom
+        animationIn="slideInUp"
         animationOut="slideOutDown"
       >
         <View style={styles.modalContent}>
@@ -183,33 +202,26 @@ const ShowPromptsScreen = () => {
           <View style={styles.inputBox}>
             <TextInput
               value={answer}
-              onChangeText={setAnswer}
+              onChangeText={(text) => setAnswer(text)}
               style={styles.input}
               placeholder="Enter Your Answer"
+              maxLength={MAX_LENGTH} 
+              multiline
             />
           </View>
-          <Button onPress={addPrompt} title="Addrrrrrr" />
+          <Text style={{ textAlign: "center", color: "gray", marginTop: 4, marginBottom: 8 }}>
+            {MAX_LENGTH - answer.length} characters remaining
+          </Text>
+          <Button onPress={addPrompt} title="Add Answer" />
         </View>
       </Modal>
-      
     </>
-
-    
-    
   );
 };
 
 export default ShowPromptsScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  link: { fontSize: 15, fontWeight: "500", color: "#581845" },
-  title: { fontSize: 16, fontWeight: "bold", color: "#581845" },
   categories: {
     marginHorizontal: 10,
     marginTop: 20,
@@ -221,7 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   modal: {
-    justifyContent: "flex-end", // ✅ simule BottomModal
+    justifyContent: "flex-end",
     margin: 0,
   },
   modalContent: {
