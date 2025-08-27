@@ -55,7 +55,6 @@ const PasswordScreen = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            {/* <MaterialDesignIcons name="lock" size={26} color="black" /> */}
             <MaterialIcons name="lock" size={26} color="black" />
           </View>
           <Image

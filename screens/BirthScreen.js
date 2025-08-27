@@ -10,9 +10,10 @@ import {
 } from 'react-native';
 import {useRef, useState,useEffect} from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
+
 
 const DateOfBirthScreen = () => {
   const [day, setDay] = useState('');
@@ -21,23 +22,32 @@ const DateOfBirthScreen = () => {
   const navigation = useNavigation();
   const monthRef = useRef(null);
   const yearRef = useRef(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const onlyDigits = (t) => t.replace(/\D/g, '');
 
   const handleDayChange = text => {
-    setDay(text);
+    const v = onlyDigits(text).slice(0, 2);
+    setDay(v);
+    if (errorMessage) setErrorMessage('');
     if (text.length == 2) {
       monthRef.current.focus();
     }
   };
 
   const handleMonthChange = text => {
-    setMonth(text);
+    const v = onlyDigits(text).slice(0, 2);
+    setMonth(v);
+    if (errorMessage) setErrorMessage('');
     if (text.length == 2) {
       yearRef.current.focus();
     }
   };
 
   const handleyearChange = text => {
-    setYear(text);
+    const v = onlyDigits(text).slice(0, 4);
+    if (errorMessage) setErrorMessage('');
+    setYear(v);
   };
 
   useEffect(() => {
@@ -52,15 +62,37 @@ const DateOfBirthScreen = () => {
     })
   },[])
 
-  const handleNext = () => {
-    if(day.trim() !== '' && month.trim() !== '' && year.trim() !== ''){
-      const dateOfBirth = `${day}/${month}/${year}`;
-
-      saveRegistrationProgress('Birth',{dateOfBirth})
+  const calculateAge = (birthDate) => {
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
-    
+    return age;
+  };
+
+  const handleNext = () => {
+    const birthDate = new Date(`${year}-${month}-${day}`);
+    if (isNaN(birthDate.getTime())) {
+      setErrorMessage("⚠️ Invalid date. Please check again.");
+      return;
+    }
+    const age = calculateAge(birthDate)
+    if (age < 18) {
+      setErrorMessage("⚠️ You must be at least 18 years old.");
+      return
+    }
+    if (age > 90) {
+      setErrorMessage("⚠️ Please enter your real birthdate.");
+      return
+    }
+    setErrorMessage('');
+    const dateOfBirth = `${day}/${month}/${year}`;
+    saveRegistrationProgress('Birth',{dateOfBirth})
     navigation.navigate('Gender');
   }
+
   return (
     <SafeAreaView
       style={{
@@ -169,10 +201,20 @@ const DateOfBirthScreen = () => {
           />
         </View>
 
+        {errorMessage ? (
+          <Text style={{color: 'red', marginTop: 15, fontWeight: 'bold', textAlign: 'center'}}>
+            {errorMessage}
+          </Text>
+        ) : null}
+
         <TouchableOpacity
-            onPress={handleNext}
+          onPress={handleNext}
           activeOpacity={0.8}
-          style={{marginTop: 30, marginLeft: 'auto'}}>
+          style={{
+            marginTop: 30, 
+            marginLeft: 'auto',
+            opacity: (day && month && year) ? 1 : 0.3,
+          }}>
           <Ionicons
             name="chevron-forward-circle-outline"
             size={45}
