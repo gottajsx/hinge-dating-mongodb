@@ -10,10 +10,9 @@ import {
   Image,
   Button,
 } from "react-native";
-import React, { useState } from "react";
-import { Entypo } from "@expo/vector-icons";
+import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from '@expo/vector-icons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from "@react-navigation/native";
 import Modal from "react-native-modal";
 
@@ -74,34 +73,35 @@ const ShowPromptsScreen = () => {
 
   return (
     <>
-      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-        {/* Header */}
-        {/* <View style={styles.header}>
-          <Text style={styles.link}></Text>
-          <Text style={styles.title}></Text>
-          <Entypo name="cross" size={22} color="black" />
-        </View> */}
+      <SafeAreaView 
+        style={{ 
+          paddingTop: Platform.OS === 'android' ? 35 : 0,
+          flex: 1, 
+          backgroundColor: "white" 
+      }}>
 
         {/* Categories */}
         <View style={{marginTop: 80, marginHorizontal: 20}}>
-        <View
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              borderWidth: 2,
-              borderColor: 'black',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <MaterialIcons name="location-enter" size={23} color="black" />
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 22,
+                borderWidth: 2,
+                borderColor: 'black',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <MaterialCommunityIcons name="location-enter" size={23} color="black" />
+            </View>
+            <Image
+              style={{width: 100, height: 40}}
+              source={{
+                uri: 'https://cdn-icons-png.flaticon.com/128/10613/10613685.png',
+              }}
+            />
           </View>
-          <Image
-            style={{width: 100, height: 40}}
-            source={{
-              uri: 'https://cdn-icons-png.flaticon.com/128/10613/10613685.png',
-            }}
-          />
         <View 
           style={[
             styles.categories,

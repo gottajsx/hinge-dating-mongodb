@@ -8,7 +8,7 @@ import {
   Image,
   Pressable,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import {useNavigation, useRoute} from '@react-navigation/native';
