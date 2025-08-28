@@ -172,6 +172,12 @@ const ShowPromptsScreen = () => {
           ))}
         </View>
 
+        {prompts.length < 3 && (
+          <Text style={{ textAlign: "center", color: "red", marginTop: 20 }}>
+            {3 - prompts.length} question{3 - prompts.length > 1 ? "s" : ""} restante{3 - prompts.length > 1 ? "s" : ""}
+          </Text>
+        )}
+
          <TouchableOpacity
             onPress={() => navigation.goBack()}
             activeOpacity={0.8}

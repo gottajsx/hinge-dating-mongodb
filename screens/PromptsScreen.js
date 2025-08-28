@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Platform,
   TouchableOpacity,
+  Button,
   Image,
   Pressable,
 } from 'react-native';
@@ -27,12 +28,25 @@ const PromptsScreen = () => {
       setPrompts(route?.params.prompts)
     }
   }, [route.params]);
+
   const handleNext = () => {
     saveRegistrationProgress('Prompts',{prompts:prompts})
     navigation.navigate("PreFinal")
   }
-  return (
 
+  const resetPrompts = () => {
+    setPrompts([
+      {question: '', answer: ''},
+      {question: '', answer: ''},
+      {question: '', answer: ''},
+    ]);
+  };
+
+  const allAnswered = prompts.every(
+    (p) => p.question.trim() !== '' && p.answer.trim() !== ''
+  );
+
+  return (
     <SafeAreaView
       style={{
         paddingTop: Platform.OS === 'android' ? 35 : 0,
@@ -136,21 +150,51 @@ const PromptsScreen = () => {
           ))}
         </View>
 
-        <TouchableOpacity
-          onPress={handleNext}
-          activeOpacity={0.8}
-          style={{marginTop: 30, marginLeft: 'auto'}}>
-          <Ionicons
-            name="chevron-forward-circle-outline"
-            size={45}
-            color="#581845"
-          />
-        </TouchableOpacity>
+        {allAnswered && (
+          <View
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              marginTop: 30,
+            }}>
+            {/* Reset */}
+            <TouchableOpacity
+              onPress={resetPrompts}
+              activeOpacity={0.8}
+              style={{
+                marginTop: 30,
+                alignSelf: 'center',
+                flexDirection: 'row',
+                alignItems: 'center'
+              }}
+            >
+              <Ionicons
+                name="refresh-circle-outline"
+                size={45}
+                color="#581845"
+              />
+              <Text style={{textAlign: "center", marginTop: 5, fontWeight: "600", color: "#581845"}}>
+                  Reset questions
+              </Text>
+            </TouchableOpacity>
+
+            {/* Next */}
+            <View style={{marginTop: 40, alignSelf: "center", width: "100%"}}>
+              <Button title="Add questions" onPress={handleNext} color="#581845" />
+              </View>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
 };
 
 export default PromptsScreen;
+
+
+
+
+
+        
 
 const styles = StyleSheet.create({});
