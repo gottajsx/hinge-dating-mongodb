@@ -33,11 +33,9 @@ const userSchema = new Schema({
   },
   location: {
     type: String,
-    //required: true,
   },
   hometown: {
     type: String,
-    required: true,
   },
   datingPreferences: [
     {
