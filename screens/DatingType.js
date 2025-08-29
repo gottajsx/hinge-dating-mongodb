@@ -17,28 +17,20 @@ import { getRegistrationProgress, saveRegistrationProgress } from '../utils/regi
 
 
 const DatingType = () => {
-  const [datingPreferences, setDatingPreferences] = useState('');
+  const [type, setType] = useState('');
   const navigation = useNavigation();
-
-  const chooseOption = option => {
-    if (datingPreferences === option) {
-      setDatingPreferences('');
-    }else{
-        setDatingPreferences(option);
-    }
-  };
 
   useEffect(() => {
     getRegistrationProgress('Dating').then(progressData => {
       if(progressData){
-        setDatingPreferences(progressData.datingPreferences || []);
+        setType(progressData.type || '');
       }
     })
   },[])
 
   const handleNext = () => {
-    if(datingPreferences){
-      saveRegistrationProgress('Dating',{datingPreferences})
+    if(type.trim() != ''){
+      saveRegistrationProgress('Dating',{type})
     }
     navigation.navigate("LookingFor");
   }
@@ -94,12 +86,12 @@ const DatingType = () => {
               justifyContent: 'space-between',
             }}>
             <Text style={{fontSize: 15, fontWeight: '500'}}>Men</Text>
-            <Pressable onPress={() => chooseOption('Men')}>
+            <Pressable onPress={() => setType('Men')}>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  datingPreferences === 'Men' ? '#581845' : '#F0F0F0'
+                  type === 'Men' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -112,12 +104,12 @@ const DatingType = () => {
               justifyContent: 'space-between',
             }}>
             <Text style={{fontSize: 15, fontWeight: '500'}}>Women</Text>
-            <Pressable onPress={() => chooseOption('Women')}>
+            <Pressable onPress={() => setType('Women')}>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  datingPreferences === 'Women' ? '#581845' : '#F0F0F0'
+                  type === 'Women' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -130,12 +122,12 @@ const DatingType = () => {
               justifyContent: 'space-between',
             }}>
             <Text style={{fontSize: 15, fontWeight: '500'}}>Everyone</Text>
-            <Pressable onPress={() => chooseOption('Everyone')}>
+            <Pressable onPress={() => setType('Everyone')}>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  datingPreferences === 'Everyone' ? '#581845' : '#F0F0F0'
+                  type === 'Everyone' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -145,11 +137,11 @@ const DatingType = () => {
         <TouchableOpacity
           onPress={handleNext}
           activeOpacity={0.8}
-          disabled={datingPreferences.length === 0}
+          disabled={type.trim() === ''}
           style={{
             marginTop: 30, 
             marginLeft: 'auto',
-            opacity: datingPreferences.length === 0 ? 0.3 : 1,
+            opacity: type.trim() === '' ? 0.3 : 1,
           }}>
           <Ionicons
             name="chevron-forward-circle-outline"
