@@ -21,6 +21,7 @@ const userSchema = new Schema({
   },
   gender: {
     type: String,
+    enum: ["Men", "Women", "Non Binary"],
     required: true,
   },
   dateOfBirth: {
@@ -29,6 +30,7 @@ const userSchema = new Schema({
   },
   type: {
     type: String,
+    enum: ["Men", "Women", "Everyone"],
     required: true,
   },
   location: {
