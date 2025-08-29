@@ -96,7 +96,7 @@ const PreFinalScreen = () => {
     try {
       setLoading(true);
       const response = await axios
-        .post(`${BASE_URL}/register`, userData)
+        .post(`${BASE_URL}/auth/register`, userData)
         .then(response => {
           console.log('Response', response);
           const token = response.data.token;
