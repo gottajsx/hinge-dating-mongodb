@@ -15,18 +15,19 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
+
 const DatingType = () => {
-  const [datingPreferences, setDatingPreferences] = useState([]);
+  const [datingPreferences, setDatingPreferences] = useState('');
   const navigation = useNavigation();
+
   const chooseOption = option => {
-    if (datingPreferences.includes(option)) {
-      setDatingPreferences(
-        datingPreferences.filter(selectedOption => selectedOption !== option),
-      );
+    if (datingPreferences === option) {
+      setDatingPreferences('');
     }else{
-        setDatingPreferences([...datingPreferences,option]);
+        setDatingPreferences(option);
     }
   };
+
   useEffect(() => {
     getRegistrationProgress('Dating').then(progressData => {
       if(progressData){
@@ -34,12 +35,14 @@ const DatingType = () => {
       }
     })
   },[])
+
   const handleNext = () => {
-    if(datingPreferences.length > 0){
+    if(datingPreferences){
       saveRegistrationProgress('Dating',{datingPreferences})
     }
     navigation.navigate("LookingFor");
   }
+
   return (
     <SafeAreaView
       style={{
@@ -96,7 +99,7 @@ const DatingType = () => {
                 name="circle"
                 size={26}
                 color={
-                  datingPreferences.includes('Men') ? '#581845' : '#F0F0F0'
+                  datingPreferences === 'Men' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -114,7 +117,7 @@ const DatingType = () => {
                 name="circle"
                 size={26}
                 color={
-                  datingPreferences.includes('Women') ? '#581845' : '#F0F0F0'
+                  datingPreferences === 'Women' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -132,7 +135,7 @@ const DatingType = () => {
                 name="circle"
                 size={26}
                 color={
-                  datingPreferences.includes('Everyone') ? '#581845' : '#F0F0F0'
+                  datingPreferences === 'Everyone' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
