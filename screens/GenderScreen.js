@@ -18,6 +18,7 @@ import { getRegistrationProgress, saveRegistrationProgress } from '../utils/regi
 const GenderScreen = () => {
   const [gender, setGender] = useState('');
   const navigation = useNavigation();  
+
   useEffect(() => {
     getRegistrationProgress('Gender').then(progressData => {
       if(progressData){
@@ -25,12 +26,14 @@ const GenderScreen = () => {
       }
     })
   },[]) 
+  
   const handleNext = () => {
     if(gender.trim() != ''){
       saveRegistrationProgress('Gender',{gender});
     }
     navigation.navigate("Dating");
   }
+  
   return (
     <SafeAreaView
       style={{
