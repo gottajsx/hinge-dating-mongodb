@@ -44,7 +44,7 @@ const userSchema = new Schema({
       type: String,
     },
   ],
-  lookingFor: {
+  relationType: {
     type: String,
     required: true,
   },

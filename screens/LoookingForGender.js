@@ -32,7 +32,7 @@ const LookingForGender = () => {
     if(lookingForGender.trim() != ''){
       saveRegistrationProgress('LookingForGender',{lookingForGender})
     }
-    navigation.navigate("LookingFor");
+    navigation.navigate("RelationType");
   }
 
   return (

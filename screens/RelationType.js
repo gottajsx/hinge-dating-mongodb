@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import {useState,useEffect} from 'react';
+import { useState,useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -16,18 +16,18 @@ import { useNavigation } from '@react-navigation/native';
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
 const RelationType = () => {
-  const [lookingFor, setLookingFor] = useState('');
+  const [relationType, setRelationType] = useState('');
   const navigation = useNavigation();
   useEffect(() => {
-    getRegistrationProgress('LookingFor').then(progressData => {
+    getRegistrationProgress('RelationType').then(progressData => {
       if(progressData){
-        setLookingFor(progressData.lookingFor || '');
+        setRelationType(progressData.relationType || '');
       }
     })
   },[])
   const handleNext = () => {
-    if(lookingFor.trim() !== ''){
-      saveRegistrationProgress('LookingFor',{lookingFor})
+    if(relationType.trim() !== ''){
+      saveRegistrationProgress('RelationType',{relationType})
     }
     navigation.navigate("Photos")
   }
@@ -82,11 +82,11 @@ const RelationType = () => {
               justifyContent: 'space-between',
             }}>
             <Text style={{fontSize: 15, fontWeight: '500'}}>Life Partner</Text>
-            <Pressable onPress={() => setLookingFor('Life Partner')}>
+            <Pressable onPress={() => setRelationType('Life Partner')}>
               <FontAwesome
                 name="circle"
                 size={26}
-                color={lookingFor == 'Life Partner' ? '#581845' : '#F0F0F0'}
+                color={relationType == 'Life Partner' ? '#581845' : '#F0F0F0'}
               />
             </Pressable>
           </View>
@@ -100,12 +100,12 @@ const RelationType = () => {
             <Text style={{fontSize: 15, fontWeight: '500'}}>
               Long-term relationship
             </Text>
-            <Pressable onPress={() => setLookingFor('Long-term relationship')}>
+            <Pressable onPress={() => setRelationType('Long-term relationship')}>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  lookingFor == 'Long-term relationship' ? '#581845' : '#F0F0F0'
+                  relationType == 'Long-term relationship' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -122,13 +122,13 @@ const RelationType = () => {
             </Text>
             <Pressable
               onPress={() =>
-                setLookingFor('Long-term relationship open to short')
+                setRelationType('Long-term relationship open to short')
               }>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  lookingFor == 'Long-term relationship open to short'
+                  relationType == 'Long-term relationship open to short'
                     ? '#581845'
                     : '#F0F0F0'
                 }
@@ -147,13 +147,13 @@ const RelationType = () => {
             </Text>
             <Pressable
               onPress={() =>
-                setLookingFor('Short-term relationship open to long')
+                setRelationType('Short-term relationship open to long')
               }>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  lookingFor == 'Short-term relationship open to long'
+                  relationType == 'Short-term relationship open to long'
                     ? '#581845'
                     : '#F0F0F0'
                 }
@@ -172,13 +172,13 @@ const RelationType = () => {
             </Text>
             <Pressable
               onPress={() =>
-                setLookingFor('Short-term relationship')
+                setRelationType('Short-term relationship')
               }>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  lookingFor == 'Short-term relationship'
+                  relationType == 'Short-term relationship'
                     ? '#581845'
                     : '#F0F0F0'
                 }
@@ -197,13 +197,13 @@ const RelationType = () => {
             </Text>
             <Pressable
               onPress={() =>
-                setLookingFor('Figuring out my dating goals')
+                setRelationType('Figuring out my dating goals')
               }>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  lookingFor == 'Figuring out my dating goals'
+                  relationType == 'Figuring out my dating goals'
                     ? '#581845'
                     : '#F0F0F0'
                 }
@@ -215,11 +215,11 @@ const RelationType = () => {
         <TouchableOpacity
           onPress={handleNext}
           activeOpacity={0.8}
-          disabled={lookingFor.trim() === ''}
+          disabled={relationType.trim() === ''}
           style={{
             marginTop: 30, 
             marginLeft: 'auto',
-            opacity: lookingFor.trim() === '' ? 0.3 : 1,
+            opacity: relationType.trim() === '' ? 0.3 : 1,
           }}>
           <Ionicons
             name="chevron-forward-circle-outline"
