@@ -31,7 +31,7 @@ const GenderScreen = () => {
     if(gender.trim() != ''){
       saveRegistrationProgress('Gender',{gender});
     }
-    navigation.navigate("Dating");
+    navigation.navigate("LookingForGender");
   }
   
   return (

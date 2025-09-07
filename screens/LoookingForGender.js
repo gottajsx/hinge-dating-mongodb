@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
 
-const DatingType = () => {
+const LookingForGender = () => {
   const [type, setType] = useState('');
   const navigation = useNavigation();
 
@@ -154,6 +154,6 @@ const DatingType = () => {
   );
 };
 
-export default DatingType;
+export default LookingForGender;
 
 const styles = StyleSheet.create({});

@@ -19,7 +19,7 @@ import BirthScreen from '../screens/BirthScreen';
 import LocationScreen from '../screens/LocationScreen';
 import GenderScreen from '../screens/GenderScreen';
 import TypeScreen from '../screens/TypeScreen';
-import DatingType from '../screens/DatingType';
+import LookingForGender from '../screens/LoookingForGender';
 import AnimationScreen from '../screens/AnimationScreen';
 import LookingFor from '../screens/LookingFor';
 import HomeTownScreen from '../screens/HomeTownScreen';
@@ -202,8 +202,8 @@ const StackNavigator = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Dating"
-        component={DatingType}
+        name="LookingForGender"
+        component={LookingForGender}
         options={{headerShown: false}}
       />
       <Stack.Screen
