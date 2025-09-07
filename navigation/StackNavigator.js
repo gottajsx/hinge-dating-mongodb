@@ -21,7 +21,7 @@ import GenderScreen from '../screens/GenderScreen';
 import TypeScreen from '../screens/TypeScreen';
 import LookingForGender from '../screens/LoookingForGender';
 import AnimationScreen from '../screens/AnimationScreen';
-import LookingFor from '../screens/LookingFor';
+import RelationType from '../screens/RelationType';
 import HomeTownScreen from '../screens/HomeTownScreen';
 import PhotoScreen from '../screens/PhotoScreen';
 import PromptsScreen from '../screens/PromptsScreen';
@@ -207,8 +207,8 @@ const StackNavigator = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="LookingFor"
-        component={LookingFor}
+        name="RelationType"
+        component={RelationType}
         options={{headerShown: false}}
       />
       <Stack.Screen

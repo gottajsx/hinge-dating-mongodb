@@ -15,7 +15,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
-const LookingFor = () => {
+const RelationType = () => {
   const [lookingFor, setLookingFor] = useState('');
   const navigation = useNavigation();
   useEffect(() => {
@@ -232,6 +232,6 @@ const LookingFor = () => {
   );
 };
 
-export default LookingFor;
+export default RelationType;
 
 const styles = StyleSheet.create({});
