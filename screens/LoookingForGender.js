@@ -17,20 +17,20 @@ import { getRegistrationProgress, saveRegistrationProgress } from '../utils/regi
 
 
 const LookingForGender = () => {
-  const [type, setType] = useState('');
+  const [lookingForGender, setLookingForGender] = useState('');
   const navigation = useNavigation();
 
   useEffect(() => {
-    getRegistrationProgress('Dating').then(progressData => {
+    getRegistrationProgress('LookingForGender').then(progressData => {
       if(progressData){
-        setType(progressData.type || '');
+        setLookingForGender(progressData.lookingForGender || '');
       }
     })
   },[])
 
   const handleNext = () => {
-    if(type.trim() != ''){
-      saveRegistrationProgress('Dating',{type})
+    if(lookingForGender.trim() != ''){
+      saveRegistrationProgress('LookingForGender',{lookingForGender})
     }
     navigation.navigate("LookingFor");
   }
@@ -86,12 +86,12 @@ const LookingForGender = () => {
               justifyContent: 'space-between',
             }}>
             <Text style={{fontSize: 15, fontWeight: '500'}}>Men</Text>
-            <Pressable onPress={() => setType('Men')}>
+            <Pressable onPress={() => setLookingForGender('Men')}>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  type === 'Men' ? '#581845' : '#F0F0F0'
+                  lookingForGender === 'Men' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -104,12 +104,12 @@ const LookingForGender = () => {
               justifyContent: 'space-between',
             }}>
             <Text style={{fontSize: 15, fontWeight: '500'}}>Women</Text>
-            <Pressable onPress={() => setType('Women')}>
+            <Pressable onPress={() => setLookingForGender('Women')}>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  type === 'Women' ? '#581845' : '#F0F0F0'
+                  lookingForGender === 'Women' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -122,12 +122,12 @@ const LookingForGender = () => {
               justifyContent: 'space-between',
             }}>
             <Text style={{fontSize: 15, fontWeight: '500'}}>Everyone</Text>
-            <Pressable onPress={() => setType('Everyone')}>
+            <Pressable onPress={() => setLookingForGender('Everyone')}>
               <FontAwesome
                 name="circle"
                 size={26}
                 color={
-                  type === 'Everyone' ? '#581845' : '#F0F0F0'
+                  lookingForGender === 'Everyone' ? '#581845' : '#F0F0F0'
                 }
               />
             </Pressable>
@@ -137,11 +137,11 @@ const LookingForGender = () => {
         <TouchableOpacity
           onPress={handleNext}
           activeOpacity={0.8}
-          disabled={type.trim() === ''}
+          disabled={lookingForGender.trim() === ''}
           style={{
             marginTop: 30, 
             marginLeft: 'auto',
-            opacity: type.trim() === '' ? 0.3 : 1,
+            opacity: lookingForGender.trim() === '' ? 0.3 : 1,
           }}>
           <Ionicons
             name="chevron-forward-circle-outline"

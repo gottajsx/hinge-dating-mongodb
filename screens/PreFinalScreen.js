@@ -36,7 +36,7 @@ const PreFinalScreen = () => {
         'Birth',
         'Location',
         'Gender',
-        'Type',
+        'LookingForGender',
         'Dating',
         'LookingFor',
         'Hometown',
@@ -71,7 +71,7 @@ const PreFinalScreen = () => {
         'Birth',
         'Location',
         'Gender',
-        'Type',
+        'LookingForGender',
         'Dating',
         'LookingFor',
         'Hometown',
@@ -95,6 +95,7 @@ const PreFinalScreen = () => {
   const registerUser = async () => {
     try {
       setLoading(true);
+      console.log('Sending POST to register with data:', userData);
       const response = await axios
         .post(`${BASE_URL}/auth/register`, userData)
         .then(response => {
