@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
 
 const generateToken = (user) => {
-  const secretKey = crypto.randomBytes(32).toString('hex');
+  const secretKey = process.env.JWT_SECRET || "fallbackSecret"; 
   const payload = { userId: user._id, email: user.email };
   return jwt.sign(payload, secretKey, { expiresIn: '1d' });
 };
